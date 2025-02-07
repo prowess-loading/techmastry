@@ -9,10 +9,10 @@ import time
 
 class MainExecutor:
     def __init__(
-            self, device_type="desk",
-            proxy_active=False,
+            self, device_type="both",
+            proxy_active=True,
             device_name="random",
-            browser_name="chrome",
+            browser_name="random",
             region="na",                    # rd, us, na, au, as, eu
             add_utm=True,
             enable_ad_click=False,
