@@ -1,10 +1,12 @@
 import random
 
 proxy_config = {
-    "host": "7vfi6pj1.lunaproxy.net",
+    "host": "tqe5qeow.lunaproxy.net",
     "port": 12233,
-    "username": "prowess_B6vvA",
-    "password": "VU7mRaafTWhwd",
+    "username": "appstar42",
+    "password": "Appstar42",
+
+    # user-appstar42-region-us:Appstar42:na.tqe5qeow.lunaproxy.net12233
 
     "region": {
         "us": "us",

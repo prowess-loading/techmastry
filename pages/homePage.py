@@ -18,4 +18,3 @@ class Page:
 
         if action in actions:
             actions[action]()
-            print(f"Performed action: {action}")
