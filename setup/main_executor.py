@@ -48,7 +48,7 @@ class MainExecutor:
 
         if click_ad:
             ad_target = random.choice(
-                ["homepage", "genderPage", "loanAmountPage", "loanTypePage"])
+                ["homepage", "agePage", "loanAmountPage", "loanTypePage"])
 
             # if ad_target == "homepage":
             #     print("Visiting Homepage")
@@ -74,17 +74,15 @@ class MainExecutor:
         else:
 
             page_actions = {
-                "homePage": ["click_random_age"],
-                "genderPage": ["click_random_age", "click_random_gender"],
-                "loanAmountPage": ["click_random_age", "click_random_gender", "click_random_loan_amount"],
-                "loanTypePage": ["click_random_age", "click_random_gender", "click_random_loan_amount", "click_random_loan_type"]
+                "genderPage": ["click_random_gender"],
+                "agePage": ["click_random_gender", "click_random_age"],
+                "loanAmountPage": ["click_random_gender", "click_random_age", "click_random_loan_amount"]
             }
 
             weights = {
-                "loanTypePage": 0.4,
-                "loanAmountPage": 0.3,
-                "genderPage": 0.2,
-                "homePage": 0.1
+                "loanAmountPage": 0.5,
+                "agePage": 0.3,
+                "genderPage": 0.2
             }
 
             target_page = random.choices(

@@ -10,10 +10,9 @@ class Page:
 
     def click_random_element(self, action):
         actions = {
-            "click_random_age": self.navigator.scroll_bottom_up_button_click,
             "click_random_gender": self.navigator.scroll_bottom_up_button_click,
+            "click_random_age": self.navigator.scroll_bottom_up_button_click,
             "click_random_loan_amount": self.navigator.scroll_bottom_up_button_click,
-            "click_random_loan_type": self.navigator.scroll_bottom_up_button_click,
         }
 
         if action in actions:
