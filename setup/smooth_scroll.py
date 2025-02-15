@@ -306,7 +306,7 @@ class SmoothScroll:
                     self.driver_quit = True
                 break
 
-            target_element = self.driver.find_element(by, target_selector)
+            target_element = self.driver.find_element(By.ID, target_selector)
             target_in_view = self.driver.execute_script(
                 "var rect = arguments[0].getBoundingClientRect();"
                 "return (rect.top >= 0 && rect.bottom <= window.innerHeight);",
@@ -342,7 +342,7 @@ class SmoothScroll:
                         self.driver_quit = True
 
                 except Exception as e:
-                    print(f"Clicked successfully in Thread")
+                    print(f"Clicked successfully in Thread::: {e}")
                     if not self.driver_quit:
                         self.driver.quit()
                         self.driver_quit = True

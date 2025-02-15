@@ -15,8 +15,8 @@ class MainExecutor:
             browser_name="random",
             region="na",                    # rd, us, na, au, as, eu
             add_utm=True,
-            enable_ad_click=False,
-            ad_click_frequency=2
+            enable_ad_click=True,
+            ad_click_frequency=3
     ):
         self.device_type = device_type
         self.proxy_active = proxy_active
@@ -38,56 +38,50 @@ class MainExecutor:
         )
 
     def process_run(self, driver, click_ad, ad_log_file):
-
         target_url = utils.target_url(self.add_utm)
         utils.open_url_with_retry(driver, target_url)
 
         page = Page(driver)
+        ad_clicker = AdClicker(driver)
 
-        # ad_clicker = AdClicker(driver)
+        page_actions = {
+            "genderPage": ["genderPage"],
+            "agePage": ["genderPage", "agePage"],
+            "loanAmountPage": ["genderPage", "agePage", "loanAmountPage"]
+        }
+        weights = {
+            "loanAmountPage": 0.5,
+            "agePage": 0.3,
+            "genderPage": 0.2
+        }
+        target_page = random.choices(
+            list(weights.keys()), weights=list(weights.values()), k=1)[0]
+
+        print(f"Final page - {target_page} - Ad Click - {click_ad}")
 
         if click_ad:
-            ad_target = random.choice(
-                ["homepage", "agePage", "loanAmountPage", "loanTypePage"])
+            if target_page == "genderPage":
+                print("Visiting genderPage")
+                ad_clicker.select_random_ad(ad_log_file)
 
-            # if ad_target == "homepage":
-            #     print("Visiting Homepage")
-            #     ad_clicker.select_random_ad(ad_log_file, ad_target)
+            elif target_page == "agePage":
+                print("Visiting agePage")
+                page.click_random_element("genderPage")
+                ad_clicker.select_random_ad(ad_log_file)
 
-            # elif ad_target == "genderPage":
-            #     print("Visiting GenderPage")
-            #     homePage.click_random_age()
-            #     ad_clicker.select_random_ad(ad_log_file, ad_target)
+            elif target_page == "loanAmountPage":
+                print("Visiting loanAmountPage")
+                page.click_random_element("genderPage")
+                page.click_random_element("agePage")
+                ad_clicker.select_random_ad(ad_log_file)
 
-            # elif ad_target == "loanAmountPage":
-            #     print("Visiting LoanAmountPage")
-            #     homePage.click_random_age()
-            #     genderPage.click_random_gender()
-            #     ad_clicker.select_random_ad(ad_log_file, ad_target)
+            else:
+                print("Visiting loanTypePage")
+                page.click_random_element("genderPage")
+                page.click_random_element("agePage")
+                page.click_random_element("loanAmountPage")
+                ad_clicker.select_random_ad(ad_log_file)
 
-            # else:
-            #     print("Visiting LoanTypePage")
-            #     homePage.click_random_age()
-            #     genderPage.click_random_gender()
-            #     loanAmountPage.click_random_loan_amount()
-            #     ad_clicker.select_random_ad(ad_log_file, ad_target)
         else:
-
-            page_actions = {
-                "genderPage": ["click_random_gender"],
-                "agePage": ["click_random_gender", "click_random_age"],
-                "loanAmountPage": ["click_random_gender", "click_random_age", "click_random_loan_amount"]
-            }
-
-            weights = {
-                "loanAmountPage": 0.5,
-                "agePage": 0.3,
-                "genderPage": 0.2
-            }
-
-            target_page = random.choices(
-                list(weights.keys()), weights=list(weights.values()), k=1)[0]
-            print(f"Final page - {target_page}")
-
             for action in page_actions[target_page]:
                 page.click_random_element(action)
